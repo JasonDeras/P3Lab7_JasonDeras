@@ -70,12 +70,12 @@ class Log{
 			this->n_log=n_log;
 		}//Set del numero de logs
 		
-		void printLog(){
+		void print(){
 			cout<<"num: "<<n_log<<", usuario: "<<usuario<<", cmd: \""<<cmd<<"\""<<endl;
-		}
+		}//Metodo print
 		
 		~Log(){
-		}
+		}//Destructor
 		
 };
 

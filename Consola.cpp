@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <string.h>
-#include "Exception.cpp"
+#include "CmdError.cpp"
 #include "Logger.cpp"
 #include <direct.h>
 
@@ -70,7 +70,7 @@ class Consola{
 				if (val) {
 					logger->clear(logger->getLogs());
 					delete logger;
-					throw Shay("Comando de cmd no es valido");
+					throw CmdError("Comando de cmd no es valido");
 					exit(0);
 				}//Si da error lo cierra
 			}//While repetitivo

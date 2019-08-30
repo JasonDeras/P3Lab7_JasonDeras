@@ -7,10 +7,10 @@ using namespace std;
 #ifndef SHAYEXCEPTION_PP
 #define SHAYEXCEPTION_PP
 
-	class Shay:public runtime_error{
+	class CmdError:public runtime_error{
 		public:
 			
-			Shay(string msg):runtime_error(msg){
+			CmdError(string msg):runtime_error(msg){
 			}//Constructor sobrecargado
 	};
 #endif

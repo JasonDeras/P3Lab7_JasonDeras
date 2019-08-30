@@ -1,26 +1,27 @@
 #include <iostream>
-#include <stdexcept>
-#include <vector>
-#include <exception>
+#include "CmdError.cpp"
 #include "Consola.cpp"
-#include "Exception.cpp"
-#include <stdexcept>
-#include <exception>
 
 using namespace std;
 
-	int main(){
+int main(){
+	
 	string usuario;
-	cout<<"Ingrese el usaurio: ";
+	cout<<"Usuario: ";
 	cin>>usuario;
-	Consola *x=new Consola(usuario,"./logs.bin");
+	
+	Consola* cons = new Consola(uusuarioser, "logs.bin");
 	
 	try{
-		x->error();
-	}catch(Shay &e){
-		cout<<e.what()<<endl;
+		consola->cmd();
+		
 	}
-	delete x;
-	system("pause");
+	catch(CmdError &e){
+		cout<<e.what();
+	}//Fin del try catch
+	
+	delete cons;
 	return 0;
-	}//Fin del main
+	
+}//fin main
+
