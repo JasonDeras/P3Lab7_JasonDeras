@@ -28,11 +28,11 @@ class Logger{
         
 		Logger(string usuario,string nom_archivo,int num_log){
 			
-			this->setUsuario(usuario);
-			this->setNom_Archivo(nom_archivo;
+			setUsuario(usuario);
+			setNom_Archivo(nom_archivo;
 			this->num_log=num_log;
 			
-		}//Fin del segundo constructor sobrecargado
+		}//Fin del constructor sobrecargado
 		
 		void setUsuario(string usuario_c){
             

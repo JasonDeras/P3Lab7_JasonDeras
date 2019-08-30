@@ -21,10 +21,10 @@ class Consola{
         
 		Consola(string usuario,Logger logger){
 			
-			this->setUsuario(usuario);
+			setUsuario(usuario);
 			this->logger=logger;
 			
-		}//Fin del segundo constructor sobrecargado
+		}//Fin del constructor sobrecargado
 		
 		void setUsuario(string usuario_c){
             
