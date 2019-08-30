@@ -34,7 +34,7 @@ class Consola{
             
             numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
             
-            strncpy(usuario, ptrmarca, numeroCaracteres);
+            strncpy(usuario, ptrusuario, numeroCaracteres);
             
             usuario[numeroCaracteres] = '\0';
             

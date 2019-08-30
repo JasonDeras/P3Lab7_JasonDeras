@@ -29,7 +29,7 @@ class Logger{
 		Logger(string usuario,string nom_archivo,int num_log){
 			
 			setUsuario(usuario);
-			setNom_Archivo(nom_archivo;
+			setNom_Archivo(nom_archivo);
 			this->num_log=num_log;
 			
 		}//Fin del constructor sobrecargado
@@ -42,7 +42,7 @@ class Logger{
             
             numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
             
-            strncpy(usuario, ptrmarca, numeroCaracteres);
+            strncpy(usuario, ptrusuario, numeroCaracteres);
             
             usuario[numeroCaracteres] = '\0';
             
@@ -60,7 +60,7 @@ class Logger{
             
             numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
             
-            strncpy(nom_archivo, ptrmarca, numeroCaracteres);
+            strncpy(nom_archivo, ptrnom_archivo, numeroCaracteres);
             
             nom_archivo[numeroCaracteres] = '\0';
 			
