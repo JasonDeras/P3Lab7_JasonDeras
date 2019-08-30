@@ -1,80 +1,84 @@
-#include<iostream> 
-#include<string.h> 
-#include <direct.h>
-#include "Logger.cpp"
+#include <iostream>
+#include <string>
+#include <string.h>
 #include "Exception.cpp"
-#ifndef CONSOLA_CPP
-#define CONSOLA_CPP
+#include "Logger.cpp"
+#include <direct.h>
 
 using namespace std;
 
+#ifndef CONSOLA_CPP
+#define CONSOLA_CPP
+
 class Consola{
 	
-      private:
-      	
-        char usuario[50];
-        Logger *logger;
-              
-      public:
-      	
-      	
-        Consola(){	
-		 	logger=new Logger();
-	   	}//Constructor simple
-	   	
-		Consola(string usuario,string nombre){
-			
-			setUsuario(usuario);
-			logger=new Logger(usuario,nombre,logger->getN());
-			
-		}//Segundo constructor sobrecargado
+	protected:
 		
-		void setUsuario(string usuario_c){
-            
-            const char *ptrusuario = usuario_c.data();
-            
-            int numeroCaracteres = usuario_c.size();
-            
-            numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
-            
-            strncpy(usuario, ptrusuario, numeroCaracteres);
-            
-            usuario[numeroCaracteres] = '\0';
-            
-        }//Set del usuario
-        
-        string getUsuario() const{
-            return usuario;
-        }//Get del usuario
+		string usuario;
+		Logger* logger;
+		int num;
+		string n_archvo;
 		
-		void setLogger(Logger *logger){
-			this->logger=logger;
-		}//Fin del metodo set logger
-		   
-		Logger* getLogger(){
-			return logger;
-		}//Fin del metodo get del logger
+	public:
 		
-		void error(){
+		Consola(){
+		}//constructor simple
+		
+		Consola(string usuario, string n_archvo){
+			this->usuario=usuario;
+			logger = new Logger(usuario, n_archvo, logger->getN());
+		}//Constructor sobrecargado
+		
+		int error(){
 			
+			Log* logs;
 			string com;
 			
-			while(true){
+			while (true) {
 				
-				cout<<"Ingrese un comando: ";
+				int val = 0;
+				cout<<"Ingrese el cmd: ";
 				cin>>com;
-				int error=system((com.c_str()));
-				if(error){
-					throw Shay("El cmd no es correcto");
-					exit(0);
-				}else{
 				
-				}
-			}//While que hace repetitivo el programa 
+				if(com == "cls"){
+					logs = new Log(usuario,com,logger->getN());
+					logger->addLog(logs);
+					logger->Escribir();
+					system("pause");
+				}//IF que valida si el comando inresado es cls
+				
+				if(com == "exit"){
+					logs = new Log(usuario,com,logger->getN());
+					logger->addLog(logs);
+					logger->Escribir();
+					exit(0);
+					system("pause");
+				}//Valida si el comando ingresado es exit
+				
+				if (com == "listar") {
+					logger->Cargar();
+				} else if (com.size() > 3 && com.substr(0, 3) == "cd ") {
+					val = _chdir(com.substr(3, com.size()).c_str());
+				} else {
+					val = system(com.c_str());
+				}//Los if de listar el archivo binario
+				
+				logs = new Log(usuario,com,logger->getN());
+				logger->addLog(logs);
+				logger->Escribir();
+				
+				if (val) {
+					logger->clear(logger->getLogs());
+					delete logger;
+					throw Shay("Comando de cmd no es valido");
+					exit(0);
+				}//Si da error lo cierra
+			}//While repetitivo
 			
-		}//Metodo de error en caso que el comando no se valido
+		}//Fin del metodo de los comandos erroneo
 		
-        ~Consola(){
-		}//Fin del destructor    
+		~Consola(){
+		}//Destructor
 };
+
 #endif

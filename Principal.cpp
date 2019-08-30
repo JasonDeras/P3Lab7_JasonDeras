@@ -17,11 +17,10 @@ using namespace std;
 	
 	try{
 		x->error();
-		x=NULL;
-		delete x;
 	}catch(Shay &e){
 		cout<<e.what()<<endl;
 	}
+	delete x;
 	system("pause");
 	return 0;
 	}//Fin del main

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <exception>
-
+#include <string.h>
 using namespace std;
 
 #ifndef SHAYEXCEPTION_PP
@@ -10,7 +10,7 @@ using namespace std;
 	class Shay:public runtime_error{
 		public:
 			
-			Shay(char*msg):runtime_error(msg){
+			Shay(string msg):runtime_error(msg){
 			}//Constructor sobrecargado
 	};
 #endif

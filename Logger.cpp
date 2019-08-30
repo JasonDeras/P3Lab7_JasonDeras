@@ -1,166 +1,159 @@
-#include<iostream> 
-#include<string.h> 
-#include<bits/stdc++.h>
-#include<string.h>
-#include<fstream>
+#include <iostream>
+#include <string>
+#include <string.h>
+#include <vector>
+#include <fstream>
 #include "Log.cpp"
+using namespace std;
 
 #ifndef LOGGER_CPP
 #define LOGGER_CPP
 
-using namespace std;
-
-
 class Logger{
 	
-      private:
-            
-        char usuario[50];
-        char nom_archivo[50];
-        int num_log;
-        vector<Log*>logs;
+	protected:
 		
-      public:
-      	
-      	
-        Logger(){	 	
-	   	}//Fin del primer constructor sobrecargado
-        
-		Logger(string usuario,string nom_archivo,int num_log){
-			
+		char usuario [50];
+		char n_archivo[50];
+		int n_log;
+		vector <Log*> logs;
+		
+	public:
+		
+		Logger(){
+		}//fin constructor vacio
+		
+		Logger(string usuario, string n_archivo, int n_log){
 			setUsuario(usuario);
-			setNom_Archivo(nom_archivo);
-			this->num_log=num_log;
-			
-		}//Fin del constructor sobrecargado
+			setN_Archivo(n_archivo);
+			this->n_log=n_log;
+		}//fin constructor sobrecargado
 		
-		void setUsuario(string usuario_c){
-            
-            const char *ptrusuario = usuario_c.data();
-            
-            int numeroCaracteres = usuario_c.size();
-            
-            numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
-            
-            strncpy(usuario, ptrusuario, numeroCaracteres);
-            
-            usuario[numeroCaracteres] = '\0';
-            
-        }//Set del usuario
-        
-        string getUsuario() const{
-            return usuario;
-        }//Get del usuario
+		string getUser()const{
+			return this->usuario;
+		}//Get del Usuario
 		
-		void setNom_Archivo(string nom_archivo_c){
+		void setUsuario(string usuario1){
 			
-			const char *ptrnom_archivo = nom_archivo_c.data();
-            
-            int numeroCaracteres = nom_archivo_c.size();
-            
-            numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
-            
-            strncpy(nom_archivo, ptrnom_archivo, numeroCaracteres);
-            
-            nom_archivo[numeroCaracteres] = '\0';
+			const char *ptrusuario = usuario1.data();
 			
-		}//Set del nombre del archivo
-		   
-		string getNom_Archivo() const{
-            return nom_archivo;
-        }//Get del nombre del archivo
-		   
-		void setNum_Log(int num_log){
-			this->num_log=num_log;
-		}//Set del numero de log   
-		   
-		int getNum_Log(){
-			return num_log;
-		}//Get del numero de log 
+			int n = usuario1.size();
+			
+			n= n < 50 ? n:49;
+			
+			strncpy(usuario, ptrusuario, n);
+			
+			usuario[n] = '\0';
+			
+		}//Set del usuario
 		
-		void addLog(Log *log){
-            logs.push_back(log);
-		}//Agrega un log al vector
-            
-        vector<Log*> getLogs(){
-            return this->logs;
-        }//Get del vector de los logs 
-
-		void remLog(int p){
-            logs.erase(logs.begin()+p);
-        }//Remueve un solo log
-        
-        int getN(){
-            return logs.size();
-        }//Retorna el el tamaño del arreglo
-        
-        void Escribir(){
-        	
+		string getN_archivo()const{
+			return n_archivo;
+		}//Get del nombre del archivo
+		
+		void setN_Archivo(string n_archivo1){
+			
+			const char *ptrn_archivo = n_archivo1.data();
+			
+			int n = n_archivo1.size();
+			
+			n = n < 50 ? n:49;
+			
+			strncpy(n_archivo, ptrn_archivo, n);
+			
+			n_archivo[n] = '\0';
+			
+		}//Get del nombre del archivo
+		
+		int getN_log()const{
+			return n_log;
+		}//Get del numero de logs
+		
+		void setN_log(int n_log){
+			this->n_log=n_log;
+		}//Set del numero de logs
+		
+		vector <Log*> getLogs(){
+			return this->logs;
+		}//Get del vector de logs
+		
+		void addLog(Log* l){
+			logs.push_back(l);
+		}//Agrega un solo nodo de log
+		
+		int getN(){
+			logs.size();
+		}//Retorna el tamño del vector de logs
+		
+		void setVectLogs( vector <Log*> logs){
+			this->logs=logs;
+		}//Set del vector de logs
+		
+		void Escribir(){//inicio metodo escribir
+		
+			fstream escribir(n_archivo, ios::out | ios::binary | ios::app);
+			
+			if(!escribir){//inicio if problemas
+				cout<<"Problemas con apertura de archivo \n";
+				system("pause");
+				return ;
+			}//IF si tuvo problemas al abrir el archivo
+			
 			string usuario;
-        	string cmd;
-        	int num_log;
-        	
-			fstream escribir(nom_archivo,ios::out|ios::binary|ios::app);
-		
-			if(!escribir){
-				cout<<"Problema con apertura del archivo\n";
-				system("pause");
-				return ;
-			}//Mira si el archivo se puede abrir
+			string cmd;
+			int n_log;
 			
-			for(int i=0;i<logs.size();i++){
+			for(int i=0; i<getN(); i++){//inicio for escribe
+				usuario = logs.at(i)->getUsuario();
+				cmd = logs.at(i)->getCmd();
+				n_log = i;
+				Log log(usuario,cmd,n_log);
 				
-				usuario=logs.at(i)->getUsuario();
-				cmd=logs.at(i)->getCmd();
-				num_log=i;
-				Log log(usuario,cmd,num_log);
-				escribir.seekp(0,ios::end);	
-				escribir.write(reinterpret_cast<char*>(&log),sizeof(log));
-			}
-			escribir.close();
-			
-		}//Fin del metodo escribir
-	
-		void Cargar(){
+				escribir.seekp(0, ios::end);
+				escribir.write(reinterpret_cast<char*>(&log), sizeof(log));
+				
+				escribir.close();
+			}//fin for escribe
+		}//fin metodo escribir
 		
-			system("cls");
-		
-			ifstream leer(nom_archivo,ios::in|ios::binary);
-			Log l;
+		void Cargar(){//inicio metodo listar
+			Log x;
+			ifstream leer(n_archivo, ios::in | ios::binary);
 			
-			if(!leer){
-				cout<<"Problema con la apertura del arhcivo\n";
+			if(!leer){//inicio if problemas
+				cout<<"Problemas con la apertura del archivo\n";
 				system("pause");
 				return ;
-			}//Mira si el archivo se puede abrir
-		
-			leer.seekg(0,ios::beg);
+			}//fin if problemas
 			
-			leer.read(reinterpret_cast<char*>(&l),sizeof(l));
+			leer.seekg(0, ios::beg);
 			
-			while(!leer.eof()){
-					leer.read(reinterpret_cast<char*>(&l),sizeof(l));
-					cout<<endl;
-					l.print();
-					cout<<endl;
-					leer.read(reinterpret_cast<char*>(&l),sizeof(l));
-			}//Fin del while que lee el archivo
-		
+			leer.read(reinterpret_cast<char*>(&x), sizeof(x));
+			
+			while(!leer.eof()){//inicio while
+			
+				leer.read(reinterpret_cast<char*>(&x), sizeof(x));
+				
+				cout<<endl;
+				x.print();
+				cout<<endl;
+				leer.read(reinterpret_cast<char*>(&x), sizeof(x));
+				
+			}//fin while
+			
 			leer.close();
-			system("pause");
+		}//fin metodo listar
 		
-		}//Fin del metodo de cargar
+		void clear(vector<Log*> x){
+			x.clear();
+			if(!x.empty()){
+				x.clear();
+			}//Se asegura que esta vacio
+		}//Metodo que limpiar el vector de logs
+
 		
-		void clear(){
-			
-			logs.clear();
-			if(!logs.empty()){
-				logs.clear();
-			}//Se asegura que esta limpio	
-			
-		}//Limpia el vector 
-		   
-        ~Logger(){
-		}//Fin del destructor    
+		~Logger(){
+		}//Destructor
 };
+
 #endif
