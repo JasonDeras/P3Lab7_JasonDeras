@@ -10,11 +10,10 @@ int main(){
 	cout<<"Usuario: ";
 	cin>>usuario;
 	
-	Consola* cons = new Consola(uusuarioser, "logs.bin");
+	Consola* cons = new Consola(usuario, "logs.bin");
 	
 	try{
-		consola->cmd();
-		
+		cons->cmd();
 	}
 	catch(CmdError &e){
 		cout<<e.what();

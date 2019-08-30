@@ -29,7 +29,7 @@ class Consola{
 			logger = new Logger(usuario, n_archvo, logger->getN());
 		}//Constructor sobrecargado
 		
-		int error(){
+		int cmd(){
 			
 			Log* logs;
 			string com;
