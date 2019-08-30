@@ -21,15 +21,15 @@ class Logger{
 	public:
 		
 		Logger(){
-		}//fin constructor vacio
+		}//Constructor vacio
 		
 		Logger(string usuario, string n_archivo, int n_log){
 			setUsuario(usuario);
 			setN_Archivo(n_archivo);
 			this->n_log=n_log;
-		}//fin constructor sobrecargado
+		}//Constructor sobrecargado
 		
-		string getUser()const{
+		string getUsuario()const{
 			return this->usuario;
 		}//Get del Usuario
 		

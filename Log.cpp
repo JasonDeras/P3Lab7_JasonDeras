@@ -1,85 +1,82 @@
-#include<iostream> 
-#include<string.h> 
+#include <iostream>
+#include <string>
+#include <string.h>
+
+using namespace std;
 
 #ifndef LOG_CPP
 #define LOG_CPP
 
-using namespace std;
-
-
 class Log{
 	
-      private:
-            
-        char usuario[50];
-        char cmd[50];
-        int num_log;
-              
-      public:
-      	
-      	
-        Log(){	 	
-	   	}//Fin del primer constructor sobrecargado
-        
-		Log(string usuario,string cmd,int num_log){
-			
+	protected:
+		
+		char usuario [50];
+		char cmd[50];
+		int n_log;
+		
+	public:
+		
+		Log(){
+		}//Constructor vacio
+		
+		Log(string usuario, string cmd, int n_log){
 			setUsuario(usuario);
 			setCmd(cmd);
-			this->num_log=num_log;
-			
-		}//Fin del constructor sobrecargado
+			this->n_log=n_log;
+		}//Constructor sobrecargado
 		
-		void setUsuario(string usuario_c){
-            
-            const char *ptrusuario = usuario_c.data();
-            
-            int numeroCaracteres = usuario_c.size();
-            
-            numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
-            
-            strncpy(usuario, ptrusuario, numeroCaracteres);
-            
-            usuario[numeroCaracteres] = '\0';
-            
-        }//Set del usuario
-        
-        string getUsuario() const{
-            return usuario;
-        }//Get del usuario
+		string getUsuario()const{
+			return this->usuario;
+		}//Get del Usuario
 		
-		void setCmd(string cmd_c){
+		void setUsuario(string usuario1){
 			
-			const char *ptrcmd = cmd_c.data();
-            
-            int numeroCaracteres = cmd_c.size();
-            
-            numeroCaracteres = numeroCaracteres < 50 ? numeroCaracteres:49;
-            
-            strncpy(cmd, ptrcmd, numeroCaracteres);
-            
-            cmd[numeroCaracteres] = '\0';
+			const char *ptrusuario = usuario1.data();
 			
-		}//Set del nombre del commando
-		   
-		string getCmd() const{
-            return cmd;
-        }//Get del nombre del commando
-		   
-		void setNum_Log(int num_log){
-			this->num_log=num_log;
-		}//Set del numero de log   
-		   
-		int getNum_Log(){
-			return num_log;
-		}//Get del numero de log 
+			int n = usuario1.size();
+			
+			n= n < 50 ? n:49;
+			
+			strncpy(usuario, ptrusuario, n);
+			
+			usuario[n] = '\0';
+			
+		}//Set del usuario
 		
-		void print(){
-			cout<<"num: "<<num_log
-            <<", usuario: "<<usuario
-            <<", cmd: "<<cmd<<endl;
-        }//Fin del metodo print
-			    
-        ~Log(){
-		}//Fin del destructor    
+		string getCmd()const{
+			return cmd;
+		}//Get del nombre del archivo
+		
+		void setCmd(string cmd1){
+			
+			const char *ptrcmd = cmd1.data();
+			
+			int n = cmd1.size();
+			
+			n = n < 50 ? n:49;
+			
+			strncpy(cmd, ptrcmd, n);
+			
+			cmd[n] = '\0';
+			
+		}//Get del nombre del archivo
+		
+		int getN_log()const{
+			return n_log;
+		}//Get del numero de logs
+		
+		void setN_log(int n_log){
+			this->n_log=n_log;
+		}//Set del numero de logs
+		
+		void printLog(){
+			cout<<"num: "<<n_log<<", usuario: "<<usuario<<", cmd: \""<<cmd<<"\""<<endl;
+		}
+		
+		~Log(){
+		}
+		
 };
+
 #endif
