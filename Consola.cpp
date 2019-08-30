@@ -1,5 +1,6 @@
 #include<iostream> 
 #include<string.h> 
+#include "Logger.cpp"
 #ifndef CONSOLA_CPP
 #define CONSOLA_CPP
 
