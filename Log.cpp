@@ -74,7 +74,7 @@ class Log{
 		}//Get del numero de log 
 		
 		void print(){
-            cout<<"num: "<<num_log
+			cout<<"num: "<<num_log
             <<", usuario: "<<usuario
             <<", cmd: "<<cmd<<endl;
         }//Fin del metodo print

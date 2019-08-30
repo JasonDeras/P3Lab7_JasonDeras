@@ -18,8 +18,8 @@ class Logger{
         char usuario[50];
         char nom_archivo[50];
         int num_log;
-        vector<Log>logs;
-		  
+        vector<Log*>logs;
+		
       public:
       	
       	
@@ -78,11 +78,11 @@ class Logger{
 			return num_log;
 		}//Get del numero de log 
 		
-		void addLog(Log log){
+		void addLog(Log *log){
             logs.push_back(log);
 		}//Agrega un log al vector
             
-        vector<Log> getLogs(){
+        vector<Log*> getLogs(){
             return this->logs;
         }//Get del vector de los logs 
 
@@ -90,13 +90,67 @@ class Logger{
             logs.erase(logs.begin()+p);
         }//Remueve un solo log
         
-		void print(){
+        int getN(){
+            return logs.size();
+        }//Retorna el el tamaño del arreglo
+        
+        void Escribir(){
+        	
+			string usuario;
+        	string cmd;
+        	int num_log;
+        	
+			fstream escribir(nom_archivo,ios::out|ios::binary|ios::app);
+		
+			if(!escribir){
+				cout<<"Problema con apertura del archivo\n";
+				system("pause");
+				return ;
+			}//Mira si el archivo se puede abrir
+			escribir.seekp(0,ios::end);	
+			for(int i=0;i<logs.size();i++){
+				usuario=logs.at(i)->getUsuario();
+				cmd=logs.at(i)->getCmd();
+				num_log=i;
+				Log log(usuario,cmd,num_log);
+				escribir.write(reinterpret_cast<char*>(&log),sizeof(log));
+			}
+			escribir.close();
 			
-        	for(int i=0;i<logs.size();i++){
-        		logs.at(i).print();
-			}//Fin del for de impresion de los logs 
-		   
-        }//Fin del metodo print
+		}//Fin del metodo escribir
+	
+		void Cargar(){
+		
+			system("cls");
+		
+			ifstream leer(nom_archivo,ios::in|ios::binary);
+			Log l;
+			int cont=0;
+		
+			if(!leer){
+				cout<<"Problema con la apertura del arhcivo\n";
+				system("pause");
+				return ;
+			}//Mira si el archivo se puede abrir
+		
+			leer.seekg(0,ios::beg);
+		
+			while(!leer.eof()){
+			
+				if(cont==0){
+					cont++;
+				}else{
+					cout<<endl;
+					l.print();
+					cout<<endl;
+				}
+				leer.read(reinterpret_cast<char*>(&l),sizeof(l));
+			}//Fin del while que lee el archivo
+		
+			leer.close();
+			system("pause");
+		
+		}//Fin del metodo de cargar
 			    
         ~Logger(){
 		}//Fin del destructor    

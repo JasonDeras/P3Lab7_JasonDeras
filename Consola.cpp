@@ -1,6 +1,7 @@
 #include<iostream> 
 #include<string.h> 
 #include "Logger.cpp"
+#include "Exception.cpp"
 #ifndef CONSOLA_CPP
 #define CONSOLA_CPP
 
@@ -11,20 +12,21 @@ class Consola{
       private:
       	
         char usuario[50];
-        Logger logger;
+        Logger *logger;
               
       public:
       	
       	
-        Consola(){	 	
-	   	}//Fin del primer constructor sobrecargado
-        
-		Consola(string usuario,Logger logger){
+        Consola(){	
+		 	logger=new Logger();
+	   	}//Constructor simple
+	   	
+		Consola(string usuario,string nombre){
 			
 			setUsuario(usuario);
-			this->logger=logger;
+			logger=new Logger(usuario,nombre,logger->getN());
 			
-		}//Fin del constructor sobrecargado
+		}//Segundo constructor sobrecargado
 		
 		void setUsuario(string usuario_c){
             
@@ -44,20 +46,33 @@ class Consola{
             return usuario;
         }//Get del usuario
 		
-		void setLogger(Logger logger){
+		void setLogger(Logger *logger){
 			this->logger=logger;
 		}//Fin del metodo set logger
 		   
-		Logger getLogger(){
+		Logger* getLogger(){
 			return logger;
 		}//Fin del metodo get del logger
 		
-		void print(){
-            logger.print();
-        }//Fin del metodo print
-			    
+		void error(){
+			
+			string com;
+			
+			while(true){
+				cout<<"Ingrese un comando: ";
+				cin>>com;
+				int error=system((com.c_str()));
+				if(error){
+					throw Shay("El cmd no es correcto");
+					exit(0);
+				}else{
+				
+				}
+			}
+			
+		}//Metodo de error en caso que el comando no se valido
+		
         ~Consola(){
-        	logger.print();
 		}//Fin del destructor    
 };
 #endif
