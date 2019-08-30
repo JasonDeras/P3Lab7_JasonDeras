@@ -1,5 +1,6 @@
 #include<iostream> 
 #include<string.h> 
+#include <direct.h>
 #include "Logger.cpp"
 #include "Exception.cpp"
 #ifndef CONSOLA_CPP
@@ -59,6 +60,7 @@ class Consola{
 			string com;
 			
 			while(true){
+				
 				cout<<"Ingrese un comando: ";
 				cin>>com;
 				int error=system((com.c_str()));
@@ -68,7 +70,7 @@ class Consola{
 				}else{
 				
 				}
-			}
+			}//While que hace repetitivo el programa 
 			
 		}//Metodo de error en caso que el comando no se valido
 		

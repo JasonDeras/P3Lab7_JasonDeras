@@ -107,12 +107,14 @@ class Logger{
 				system("pause");
 				return ;
 			}//Mira si el archivo se puede abrir
-			escribir.seekp(0,ios::end);	
+			
 			for(int i=0;i<logs.size();i++){
+				
 				usuario=logs.at(i)->getUsuario();
 				cmd=logs.at(i)->getCmd();
 				num_log=i;
 				Log log(usuario,cmd,num_log);
+				escribir.seekp(0,ios::end);	
 				escribir.write(reinterpret_cast<char*>(&log),sizeof(log));
 			}
 			escribir.close();
@@ -125,8 +127,7 @@ class Logger{
 		
 			ifstream leer(nom_archivo,ios::in|ios::binary);
 			Log l;
-			int cont=0;
-		
+			
 			if(!leer){
 				cout<<"Problema con la apertura del arhcivo\n";
 				system("pause");
@@ -134,24 +135,31 @@ class Logger{
 			}//Mira si el archivo se puede abrir
 		
 			leer.seekg(0,ios::beg);
-		
-			while(!leer.eof()){
 			
-				if(cont==0){
-					cont++;
-				}else{
+			leer.read(reinterpret_cast<char*>(&l),sizeof(l));
+			
+			while(!leer.eof()){
+					leer.read(reinterpret_cast<char*>(&l),sizeof(l));
 					cout<<endl;
 					l.print();
 					cout<<endl;
-				}
-				leer.read(reinterpret_cast<char*>(&l),sizeof(l));
+					leer.read(reinterpret_cast<char*>(&l),sizeof(l));
 			}//Fin del while que lee el archivo
 		
 			leer.close();
 			system("pause");
 		
 		}//Fin del metodo de cargar
-			    
+		
+		void clear(){
+			
+			logs.clear();
+			if(!logs.empty()){
+				logs.clear();
+			}//Se asegura que esta limpio	
+			
+		}//Limpia el vector 
+		   
         ~Logger(){
 		}//Fin del destructor    
 };
